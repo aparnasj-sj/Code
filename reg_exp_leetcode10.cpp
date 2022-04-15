@@ -34,8 +34,8 @@ public:
            mt=true;
         }
          if( j<=p.length()-2 && p[j+1]=='*'){
-            if(fun(s,p,i,j+2,dp)||(mt && fun(s,p,i+1,j,dp)) ||(mt && fun(s,p,i+1,j+2,dp))){
-                //match 0 OR match 1 and expect more OR match one and exprect no more 
+            if(fun(s,p,i,j+2,dp)||(mt && fun(s,p,i+1,j,dp))){
+                //match 0 OR (match 1 and expect more  
                 //third case is needed , 
                 return dp[i][j]=1;
             }else{
@@ -64,3 +64,22 @@ public:
         return false;
     }
 };
+// python
+class Solution(object):
+    def isMatch(self, text, pattern):
+        memo = {}
+        def dp(i, j):
+            if (i, j) not in memo:
+                if j == len(pattern):
+                    ans = i == len(text)
+                else:
+                    first_match = i < len(text) and pattern[j] in {text[i], '.'}
+                    if j+1 < len(pattern) and pattern[j+1] == '*':
+                        ans = dp(i, j+2) or first_match and dp(i+1, j)
+                    else:
+                        ans = first_match and dp(i+1, j+1)
+
+                memo[i, j] = ans
+            return memo[i, j]
+
+        return dp(0, 0)
