@@ -1,3 +1,5 @@
+// adjacency list
+
 void dfs_helper(vector<int> adj[], vector<int> &ans, map<int, bool> &visited,
 
                                                            int src, int parent)
